@@ -11,10 +11,10 @@ import io.javalin.Javalin;
 
 public class ConnectionFactory {
 	
-	String server = null;
-	String url = null;
-	String username = null;
-	String password = null;
+	private static String server = null;
+	private static String url = null;
+	private static String username = null;
+	private static String password = null;
 	
 	public static boolean getConnection(String query) {
 		
@@ -33,18 +33,6 @@ public class ConnectionFactory {
 		
 		
 		return status;
-	}
-	
-	public static boolean getConnection(Javalin app) {
-		
-		boolean status = false;
-		
-		//put in controller method
-		//app.get(null, ctx -> ctx.json(Controller.));
-		
-		return status;
-	}
-	
-	
+	}	
 
 }
