@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 	
 	private String username = "postgres";
-	private String password = "@kljeo88";
-	private String url = "jdbc:postgresql://localhost/postgres";
+	private String password = "Sixfourteen614";
+	private String url = "reimbursementdatabase.cxsi6hkq9t16.us-east-2.rds.amazonaws.com";
 	
 	public Connection getConnection() throws SQLException{
 		Connection connection = DriverManager.getConnection(url,username,password);
