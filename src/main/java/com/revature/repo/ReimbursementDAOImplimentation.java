@@ -7,12 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ReimbursementDAOImplimentation implements ReimbursementDAO{
+import com.revature.util.ConnectionFactory;
 
-	private static String server = null;
-	private static String url = null;
-	private static String username = null;
-	private static String password = null;
+public class ReimbursementDAOImplimentation implements ReimbursementDAO{
+	
+	
 	
 	public ReimbursementDAOImplimentation() {
 		// TODO Auto-generated constructor stub
@@ -28,7 +27,7 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		int amount = (int) values.get(3);
 		
 		
-		try(Connection connection = DriverManager.getConnection(url, username, password)){
+		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			String query = "INSERT INTO requests_table(employee_id, request_type, description, amount) VALUES(?,?,?,?)";
 			PreparedStatement ps = connection.prepareStatement(query);
@@ -53,7 +52,7 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		
 		boolean status = false;
 
-		try(Connection connection = DriverManager.getConnection(url, username, password)){
+		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			String query = "SELECT request_approval FROM requests_table WHERE employee_id = ? AND request_type = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
@@ -82,7 +81,7 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		
 		boolean status = false;
 		
-		try(Connection connection = DriverManager.getConnection(url, username, password)){
+		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			String query = "UPDATE requests_table SET request_type = ? WHERE employee_id = ? AND request_type = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
@@ -106,7 +105,7 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 
 		boolean status = false;
 		
-		try(Connection connection = DriverManager.getConnection(url, username, password)){
+		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			String query = "UPDATE requests_table SET description = ? WHERE employee_id = ? AND request_type = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
@@ -130,7 +129,7 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 
 		boolean status = false;
 		
-		try(Connection connection = DriverManager.getConnection(url, username, password)){
+		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			String query = "DELETE FROM requests_table WHERE employee_id = ? AND request_type = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
