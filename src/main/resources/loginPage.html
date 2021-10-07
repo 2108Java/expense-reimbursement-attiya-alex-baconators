@@ -2,14 +2,19 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Company AA Reimbursement Site</title>
+<title>Company AA Reimbursement Login Page</title>
 </head>
 <body>
 	<h1>Welcome to Company AA Reimbursement Page</h1>
 	<form  action = "/login" method = "GET">
-		<input type = "text" name = "username">
-		<input type = "password" name = "password"><!-- type = "password" encrypts the password -->
+		<input type = "text" placeholder = "Enter username" name = "username">
+		<input type = "password" placeholder = "Enter password" name = "password">
 		<input type = "submit">
 	</form>
+	<!-- Next steps: connect this html page to a JS application where homepage menu is displayed -->
+	<!--  after the username and password is verified -->
+	<a href = "newUserPage.html" >New user? Click here!</a>
+	<!-- for newUserPage.html have the user state whether they are an employee or a finance mgr -->
+	<!-- need two separate user menus, employee "to do" and finance manager "to do" -->
 </body>
 </html>
