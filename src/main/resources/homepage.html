@@ -5,26 +5,22 @@
 <title>Company AA Reimbursement Site</title>
 </head>
 <body>
-	<h1 style = "text-align: center";>Welcome to the Reimbursement Hub</h1>
+	<h1 style = "text-align: center">Welcome to the Reimbursement Hub</h1>
 	<h3 style = "text-align: center">How can we help you today?</h3>
 	
-	
-	<label for = "menuOptions">Select an option:</label>
-	<select name = "menuOptions" id = "menuOptions">
-		<option value = "0"></option>
-		<option value = "1">Submit a new expense</option>
-		<option value = "2">View current reimbursement total</option>
-		<!-- under option 2: edit request type and/or request description  -->
-		<option value = "3">View approval status on reimbursement records</option>
-		<option value = "4">View approved reimbursement records</option>
-		<option value = "5"> View rejected reimbursement records</option>
-		<option value = "6">Delete a pending reimbursement record</option>
-		<option value = "7">Log out</option>
+	<label for = "displayMenu">select from the drop-down list:</label>
+	<select onChange="location = this.value;" id = "displayMenu;">
+		<option value = "homepage.html"></option>
+		<option value = "newExpense.html">Submit a new expense</option>
+		<option value = "currentReimbursement.html">View current reimbursement total</option>
+		<!-- for "currentReimbursement": user should be able to edit request type and/or request description  -->
+		<option value = "status.html">View approval status on reimbursement records</option>
+		<option value = "viewApproved.html">View approved reimbursement records</option>
+		<option value = "viewRejected.html"> View rejected reimbursement records</option>
+		<option value = "deletePending.html">Delete a pending reimbursement record</option>
+		<option value = "loginPage.html">Log out</option> 
 	</select>
-	<input type = "submit" value = "Submit">
-
 	 
-	<script src = "menuDisplay.js"></script>
-
+	
 </body>
 </html>
