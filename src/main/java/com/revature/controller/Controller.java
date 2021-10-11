@@ -53,6 +53,7 @@ public class Controller implements ControllerInterface{
 		
 		requestList = rd.getAllRequestsByType(requestType);
 		
+		
 	}
 	
 	

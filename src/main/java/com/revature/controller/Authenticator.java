@@ -13,10 +13,12 @@ public class Authenticator {
 		Service s = new Service();
 		String destination = "";
 		int id = s.validate(ctx.formParam("username"));
+		String pass = ctx.formParam("password");
 		
-		if(id != 0 && ctx.formParam("password").equals(ud.checkPassword(id))) {
+		if(id != 0 && pass.equals(ud.checkPassword(id))) {
 			
 			ctx.sessionAttribute("loggedIn", true);
+			ctx.sessionAttribute("id", id);
 			destination = "/RequestsMenu.html";
 			
 		}else {
