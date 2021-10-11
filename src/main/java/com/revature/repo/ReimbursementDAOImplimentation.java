@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.revature.models.Request;
 import com.revature.util.ConnectionFactory;
 
 public class ReimbursementDAOImplimentation implements ReimbursementDAO{
@@ -18,24 +20,19 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 	}
 
 	@Override
-	public boolean submitRequest(ArrayList<Object> values) {
+	public boolean submitRequest(Request request) {
 		
-		boolean status = true;
-		int employeeId = (int) values.get(0);
-		String requestType = (String) values.get(1);
-		String description = (String) values.get(2);
-		int amount = (int) values.get(3);
-		
+		boolean status = true;		
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			String query = "INSERT INTO requests_table(employee_id, request_type, description, amount) VALUES(?,?,?,?)";
 			PreparedStatement ps = connection.prepareStatement(query);
 			
-			ps.setInt(1, employeeId);
-			ps.setString(2, requestType);
-			ps.setString(3, description);
-			ps.setInt(4, amount);
+			ps.setInt(1, request.getEmployeeId());
+			ps.setString(2, request.getRequestType());
+			ps.setString(3, request.getDescription());
+			ps.setInt(4, request.getAmount());
 			
 			status = ps.execute();
 			
@@ -144,6 +141,36 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 			e.printStackTrace();
 		}
 		return status;
+	}
+
+	@Override
+	public List<Request> getAllRequestsByType(String type) {
+
+		List<Request> requestList = new ArrayList<>();
+
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "SELECT * FROM requests_table WHERE request_type = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, type);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Request r = new Request(rs.getInt("employee_id"), rs.getBoolean("request_approval"), type, rs.getString("description"), rs.getInt("amount"));
+				
+				requestList.add(r);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return requestList;
 	}
 
 	
