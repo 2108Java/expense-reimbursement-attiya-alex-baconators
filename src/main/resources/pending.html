@@ -7,15 +7,19 @@
 <body>
 <h1 style = "text-align:center">Pending Expenses</h1>
 
-<form action="/pendingExpenses" method = "GET">
-
-<input type = "text" placeholder = "employee id" name = "id">
-<input type = "text" placeholder = "first name" name = "first">
-<input type = "text" placeholder = "last name" name = "last">
-<input type = "number" placeholder = "expense amount" name = "newExpense">
+<!-- <form action="/pendingExpenses" method = "GET"> -->
+<div class = "container">
+<input type = "text" placeholder = "employee id" name = "id" class = "form-control">
+<input type = "text" placeholder = "first name" name = "first" class = "form-control">
+<input type = "text" placeholder = "last name" name = "last" class = "form-control">
+<input type = "text" placeholder = "description" name = "description" class = "form-control">
+<input type = "number" placeholder = "expense amount" name = "amount" class = "form-control">
+<select name = "status">
+<option value = "pending">pending</option>
+</select>
 <input type = "submit" id = "submitExpense">
 
-</form>
+</div>
 <br></br>
  <div class="info">
         <table class="table">
@@ -23,7 +27,9 @@
                 <th scope="col">Employee ID</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
+                <th scope="col">Description</th>
                 <th scope="col">Expense Amount</th>
+                <th scope="col">Status</th>
             </tr>
             
         <tbody id="expenseTable">

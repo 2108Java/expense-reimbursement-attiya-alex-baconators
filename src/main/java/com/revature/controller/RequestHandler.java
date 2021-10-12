@@ -72,7 +72,7 @@ public class RequestHandler {
 				Request r = new Request(Integer.parseInt(ctx.queryParam("employeeId")), 
 						Boolean.parseBoolean(ctx.queryParam("approval")), 
 						ctx.queryParam("requestType"), ctx.queryParam("description"), 
-						Integer.parseInt(ctx.queryParam("amount")));
+						Integer.parseInt(ctx.queryParam("amount")));//"approval" should be removed because the status will be "pending" by default
 				
 				rd.submitRequest(r);
 				ctx.status(201);
@@ -83,7 +83,7 @@ public class RequestHandler {
 			}
 		});
 		
-		app.get("/editRequestType", ctx -> {
+		app.get("/editRequestType", ctx -> {//remove, we will just have a delete option in the third selection of the drop down list in the homepage
 			
 			if(checkLogin(ctx)) {
 				
@@ -101,7 +101,7 @@ public class RequestHandler {
 			
 		});
 		
-		app.get("/editRequestDescription", ctx -> {
+		app.get("/editRequestDescription", ctx -> {//same as line 86
 			
 			if(checkLogin(ctx)) {
 				
