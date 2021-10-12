@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Company AA Reimbursement Site</title>
+</head>
+<body>
+	<h1 style = "text-align: center">Welcome to the Reimbursement Hub</h1>
+	<h3 style = "text-align: center">How can we help you today?</h3>
+	
+	<label for = "displayMenu">select from the drop-down list:</label>
+	<select onChange="location = this.value;" id = "displayMenu;">
+		<option value = "homepage.html"></option>
+		<option value = "newExpense.html">Submit a new expense</option>
+		<option value = "currentReimbursement.html">View current reimbursement total</option>
+		<!-- for "currentReimbursement": user should be able to edit request type and/or request description  -->
+		<option value = "pending.html">View approval status on reimbursement records or delete pending records</option>
+		<!-- should be able to delete pending expenses -->
+		<option value = "viewApproved.html">View approved reimbursement records</option>
+		<option value = "viewRejected.html"> View rejected reimbursement records</option>
+		<option value = "loginPage.html">Log out</option> 
+	</select>
+	 
+	
+</body>
+</html>
