@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.revature.models.Employee;
 import com.revature.util.ConnectionFactory;
 
 public class UserDAOImplimentation implements UserDAO {
@@ -14,9 +15,32 @@ public class UserDAOImplimentation implements UserDAO {
 	}
 
 	@Override
-	public boolean addNewUser() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addNewUser(Employee employee) {
+		
+		Boolean status = false;
+
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "INSERT INTO employee_table(firstname, lastname, department, outstanding_expenses) VALUES (?,?,?,?)";
+			
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, employee.getFirstname());
+			ps.setString(2, employee.getLastname());
+			ps.setString(3, employee.getDepartment());
+			ps.setFloat(4, employee.getOutstandingExpenses());
+			
+			status = ps.execute();
+			
+			 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return status;
 	}
 
 	@Override
@@ -42,6 +66,36 @@ public class UserDAOImplimentation implements UserDAO {
 			e.printStackTrace();
 		}
 		return password;
+	}
+
+	@Override
+	public boolean registerUser(Employee employee) {
+		
+		Boolean status = false;
+
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "INSERT INTO employee_table(firstname, lastname, address, city, state, zip, username, password) VALUES (?,?,?,?,?,?,?,?)";
+			
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, employee.getFirstname());
+			ps.setString(2, employee.getLastname());
+			ps.setString(3, employee.getAddress());
+			ps.setString(4, employee.getCity());
+			ps.setString(5, employee.getState());
+			ps.setInt(6, employee.getZip());
+			ps.setString(7, employee.getUsername());
+			ps.setString(8, employee.getPassword());
+			
+			status = ps.execute();
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 }

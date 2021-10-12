@@ -5,8 +5,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.revature.models.Employee;
 import com.revature.models.Request;
 import com.revature.repo.ReimbursementDAOImplimentation;
+import com.revature.repo.UserDAOImplimentation;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -50,7 +52,9 @@ public class RequestHandler {
 			
 			if(checkLogin(ctx)) {
 				ctx.json(controller.checkRequestStatus(ctx));
+				ctx.status(204);
 			}else {
+				ctx.status(403);
 				ctx.redirect("/loginPage.html");
 			}
 		});
@@ -71,7 +75,10 @@ public class RequestHandler {
 						Integer.parseInt(ctx.queryParam("amount")));
 				
 				rd.submitRequest(r);
+				ctx.status(201);
+				
 			} else {
+				ctx.status(403);
 				ctx.redirect("/loginPage.html");
 			}
 		});
@@ -85,8 +92,10 @@ public class RequestHandler {
 				int id = Integer.parseInt(ctx.queryParam("id"));
 				
 				ctx.json(rd.editRequestType(typeOrigin, typeTarget, id));
+				ctx.status(204);
 				
 			}else {
+				ctx.status(403);
 				ctx.redirect("/loginPage.html");
 			}
 			
@@ -101,10 +110,41 @@ public class RequestHandler {
 				int id = Integer.parseInt(ctx.queryParam("id"));
 				
 				ctx.json(rd.editRequestType(newDescription, typeTarget, id));
+				ctx.status(204);
 				
 			}else {
+				ctx.status(403);
 				ctx.redirect("/loginPage.html");
+				
 			}
+			
+		});
+		
+		app.get("/addNewUser", ctx -> {
+			
+			UserDAOImplimentation ud = new UserDAOImplimentation();
+			
+			Employee employee = new Employee(Integer.parseInt(ctx.queryParam("employeeId")),
+					ctx.queryParam("firstname"), ctx.queryParam("lastname"), 
+					ctx.queryParam("department"), Float.parseFloat(ctx.queryParam("outstandingExpenses")), 
+					Integer.parseInt(ctx.queryParam("managerId")));
+			
+			ud.addNewUser(employee);
+			ctx.status(201);
+			
+		});
+		
+		app.get("/registerUser", ctx -> {
+			
+			UserDAOImplimentation ud = new UserDAOImplimentation();
+			
+			Employee employee = new Employee(Integer.parseInt(ctx.queryParam("employeeId")), 
+					ctx.queryParam("firstname"), ctx.queryParam("lastname"), ctx.queryParam("address"), 
+					ctx.queryParam("city"), ctx.queryParam("state"), Integer.parseInt(ctx.queryParam("zip")), 
+					ctx.queryParam("username"), ctx.queryParam("password"));
+			
+			ud.registerUser(employee);
+			ctx.status(201);
 			
 		});
 		
