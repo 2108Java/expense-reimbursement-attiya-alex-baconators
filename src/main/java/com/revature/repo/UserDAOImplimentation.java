@@ -75,18 +75,19 @@ public class UserDAOImplimentation implements UserDAO {
 
 		try(Connection connection = ConnectionFactory.getConnection()){
 			
-			String query = "INSERT INTO employee_table(firstname, lastname, address, city, state, zip, username, password) VALUES (?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO employee_table(firstname, lastname, address, city, state, zip, username, password) VALUES (?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps = connection.prepareStatement(query);
 			
 			ps.setString(1, employee.getFirstname());
 			ps.setString(2, employee.getLastname());
 			ps.setString(3, employee.getAddress());
-			ps.setString(4, employee.getCity());
-			ps.setString(5, employee.getState());
-			ps.setInt(6, employee.getZip());
-			ps.setString(7, employee.getUsername());
-			ps.setString(8, employee.getPassword());
+			ps.setString(4, employee.getDepartment());//added department
+			ps.setString(5, employee.getCity());
+			ps.setString(6, employee.getState());
+			ps.setInt(7, employee.getZip());
+			ps.setString(8, employee.getUsername());
+			ps.setString(9, employee.getPassword());
 			
 			status = ps.execute();
 
