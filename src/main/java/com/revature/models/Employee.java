@@ -7,7 +7,6 @@ public class Employee {
 	private String lastname;
 	private String department;
 	private float outstandingExpenses;
-	private int managerId;
 	
 	private String address;
 	private String city;
@@ -20,15 +19,13 @@ public class Employee {
 		super();
 	}
 
-	public Employee(int employeeId, String firstname, String lastname, String department, float outstandingExpenses,
-			int managerId) {
+	public Employee(int employeeId, String firstname, String lastname, String department, float outstandingExpenses) {
 		super();
 		this.employeeId = employeeId;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.department = department;
 		this.outstandingExpenses = outstandingExpenses;
-		this.managerId = managerId;
 	}
 
 	public Employee(int employeeId, String firstname, String lastname, String address, String city, String state,
@@ -75,13 +72,6 @@ public class Employee {
 	public void setOutstandingExpenses(float outstandingExpenses) {
 		this.outstandingExpenses = outstandingExpenses;
 	}
-	public int getManagerId() {
-		return managerId;
-	}
-	public void setManagerId(int managerId) {
-		this.managerId = managerId;
-	}
-	
 	
 	public String getAddress() {
 		return address;
@@ -123,8 +113,8 @@ public class Employee {
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", department=" + department + ", outstandingExpenses=" + outstandingExpenses + ", managerId="
-				+ managerId + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
+				+ ", department=" + department + ", outstandingExpenses=" + outstandingExpenses + ", address=" 
+				+ address + ", city=" + city + ", state=" + state + ", zip=" + zip
 				+ ", username=" + username + ", password=" + password + "]";
 	}
 	

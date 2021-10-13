@@ -126,8 +126,7 @@ public class RequestHandler {
 			
 			Employee employee = new Employee(Integer.parseInt(ctx.queryParam("employeeId")),
 					ctx.queryParam("firstname"), ctx.queryParam("lastname"), 
-					ctx.queryParam("department"), Float.parseFloat(ctx.queryParam("outstandingExpenses")), 
-					Integer.parseInt(ctx.queryParam("managerId")));
+					ctx.queryParam("department"), Float.parseFloat(ctx.queryParam("outstandingExpenses")));
 			
 			ud.addNewUser(employee);
 			ctx.status(201);
