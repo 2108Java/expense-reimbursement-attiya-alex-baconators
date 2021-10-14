@@ -1,3 +1,5 @@
+//trying to populate table for SubmitOrDeleteExpense.html page
+
 let fullURL = "http://localhost:9000/submitRequest";
 let submitExpense = document.getElementById("submitExpense");
 

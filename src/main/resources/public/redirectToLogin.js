@@ -2,7 +2,7 @@
  * Redirected from preLogin.html
  */
 
-function EmployeeLogin(){
+//function UserLogin(){
 //	let id = document.getElementById("id").value;
 	
 //	if (id.equals("emp")){
@@ -10,13 +10,14 @@ function EmployeeLogin(){
 //	}else{
 //		loginPage_mgr.html;
 //	}
+//		let id = document.getElementById("id").value;
+//		if (id.equals("emp")){
+//			loginPage_emp.html;
+//		}else{
+//			loginPage_mgr.html;
+//	}
+//}
+	//prints on browser console only. Finding a way to print Hello! on webpage;
 
-	let btn = document.createElement("button"); 
-	btn.onclick = function(){
-		let id = document.getElementById("id").value;
-		if (id.equals("emp")){
-			loginPage_emp.html;
-		}else{
-			loginPage_mgr.html;
-	}
-}
+	console.log("Hello!");
+	
