@@ -31,46 +31,46 @@ public class RequestHandler {
 		ReimbursementDAOImplimentation rd = new ReimbursementDAOImplimentation();
 		Controller controller = new Controller();
 		
-		app.get("/", ctx -> {
-			HttpServletRequest request = ctx.req;
-			HttpServletResponse response = ctx.res;
-			
-			RequestDispatcher reqDispatcher = ctx.req.getRequestDispatcher("/loginPage.html");
-			
-			reqDispatcher.forward(request, response);
-		});
-		
-		app.get("/login", ctx -> ctx.redirect(authenticator.login(ctx)));
-		
-		app.get("/", ctx -> ctx.req.getRequestDispatcher("/loginPage.html").forward(ctx.req, ctx.res));
-				
-		app.get("/logout", ctx -> ctx.redirect("/loginPage.html"));
-		
-//		app.get("/getRequests", ctx -> ctx.json(rd.))
-		
-		app.get("/checkStatus", ctx -> {
-			
-			if(checkLogin(ctx)) {
-				ctx.json(controller.checkRequestStatus(ctx));
-				ctx.status(204);
-			}else {
-				ctx.status(403);
-				ctx.redirect("/loginPage.html");
-			}
-		});
-		
-		app.post("/invalidateSession", ctx -> {
-			
-			ctx.consumeSessionAttribute("user");
-			ctx.redirect("/loginPage");
-			
-		});
+//		app.get("/", ctx -> {
+//			HttpServletRequest request = ctx.req;
+//			HttpServletResponse response = ctx.res;
+//			
+//			RequestDispatcher reqDispatcher = ctx.req.getRequestDispatcher("/loginPage.html");
+//			
+//			reqDispatcher.forward(request, response);
+//		});
+//		
+//		app.get("/login", ctx -> ctx.redirect(authenticator.login(ctx)));
+//		
+//		app.get("/", ctx -> ctx.req.getRequestDispatcher("/loginPage.html").forward(ctx.req, ctx.res));
+//				
+//		app.get("/logout", ctx -> ctx.redirect("/loginPage.html"));
+//		
+////		app.get("/getRequests", ctx -> ctx.json(rd.))
+//		
+//		app.get("/checkStatus", ctx -> {
+//			
+//			if(checkLogin(ctx)) {
+//				ctx.json(controller.checkRequestStatus(ctx));
+//				ctx.status(204);
+//			}else {
+//				ctx.status(403);
+//				ctx.redirect("/loginPage.html");
+//			}
+//		});
+//		
+//		app.post("/invalidateSession", ctx -> {
+//			
+//			ctx.consumeSessionAttribute("user");
+//			ctx.redirect("/loginPage");
+//			
+//		});
 		
 		app.get("/submitRequest", ctx -> {
 			
 			if(checkLogin(ctx)) {
 				Request r = new Request(Integer.parseInt(ctx.queryParam("employeeId")), 
-						Boolean.parseBoolean(ctx.queryParam("approval")), 
+						ctx.queryParam("approval"), 
 						ctx.queryParam("requestType"), ctx.queryParam("description"), 
 						Integer.parseInt(ctx.queryParam("amount")));//"approval" should be removed because the status will be "pending" by default
 				
@@ -147,6 +147,7 @@ public class RequestHandler {
 			
 		});
 		
+		app.get("/getRequest", ctx -> ctx.json(rd.getRequestByType(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")))));
 
 	}
 
