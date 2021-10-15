@@ -159,7 +159,7 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 			
 			while(rs.next()) {
 				
-				Request r = new Request(rs.getInt("employee_id"), rs.getBoolean("request_approval"), type, rs.getString("description"), rs.getInt("amount"));
+				Request r = new Request(rs.getInt("employee_id"), rs.getString("request_approval"), type, rs.getString("description"), rs.getInt("amount"));
 				
 				requestList.add(r);
 			}
@@ -171,6 +171,40 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		
 		
 		return requestList;
+	}
+	
+	
+	@Override
+	public Request getRequestByType(String type, int employeeId) {
+
+		Request request = new Request();
+
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "SELECT * FROM requests_table WHERE request_type = ? AND employee_Id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, type);
+			ps.setInt(2, employeeId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				request.setEmployeeId(rs.getInt("employee_id")); 
+				request.setApproval(rs.getString("request_approval")); 
+				request.setRequestType(type);
+				request.setDescription(rs.getString("description"));
+				request.setAmount(rs.getInt("amount"));
+			}	
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return request;
 	}
 
 	

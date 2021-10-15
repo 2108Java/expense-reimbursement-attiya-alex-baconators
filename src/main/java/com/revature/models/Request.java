@@ -3,13 +3,15 @@ package com.revature.models;
 public class Request {
 	
 	private int employeeId;
-	private boolean approval;
+	private String approval;
 	private String requestType;
 	private String description;
 	private int amount;
 //	private String time;
+	
+	
 
-	public Request(int employeeId, boolean approval, String requestType, String description, int amount) {
+	public Request(int employeeId, String approval, String requestType, String description, int amount) {
 		super();
 		this.employeeId = employeeId;
 		this.approval = approval;
@@ -18,16 +20,20 @@ public class Request {
 		this.amount = amount;
 		//this.time = time;
 	}
+	
+	public Request() {
+	super();
+	}
 	public int getEmployeeId() {
 		return employeeId;
 	}
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-	public boolean isApproval() {
+	public String isApproval() {
 		return approval;
 	}
-	public void setApproval(boolean approval) {
+	public void setApproval(String approval) {
 		this.approval = approval;
 	}
 	public String getRequestType() {
