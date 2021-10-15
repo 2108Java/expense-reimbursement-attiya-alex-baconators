@@ -6,15 +6,15 @@
 </head>
 <body>
 	<h1 style = "text-align: centered">Are you an Employee or Finance Manager?</h1>
-	<select>
+	<select onChange = "location = this.value;">
 	<option value = preLogin></option>
-	<option value = loginPage_emp.html id = "emp">Employee</option>
-	<option value = loginPage_mgr.html id = "mgr">Manager</option>
+	<option value = "loginPage_emp.html">Employee</option>
+	<option value = "loginPage_mgr.html">Manager</option>
 	</select>
 	
-	<a href = "redirectToLogin.html">
+	<!-- <a href = "redirectToLogin.html">
 	<button>Submit</button>
-	</a>
+	</a>-->
 	
 </body>
 </html>

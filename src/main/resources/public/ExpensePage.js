@@ -8,7 +8,7 @@ let xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function(){
 	if(this.readyState == 4 && this.status == 200){
 		let pending = JSON.parse(this.responseText);
-		
+		console.log(pending);
 		submitExpense.addEventListener('click',addRow(pending));
 	} 
 }
