@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="getRequest">
+		<form action="http://localhost:9000/getAllRequests?" method="GET">
+			<select name="type" placeholder="Request Type">
+				<option value = "food">Food</option>
+				<option value = "lodging">Lodging</option>
+				<option value = "travel">Travel</option>
+				<option value = "other">Other</option>
+			</select>
+			<br>
+			<input type="submit" id="submit">
+		</form>
+	</div>
+	<div>
+		<form onclick="location.href = 'http://localhost:9000/RequestsMenuManager.html';">
+			<button type="button" class="btn btn-primary" id="return">Return to Requests Menu</button>
+		</form>
+	</div>
+</body>
+</html>
