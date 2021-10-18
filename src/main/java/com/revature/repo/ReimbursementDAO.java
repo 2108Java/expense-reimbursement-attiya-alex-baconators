@@ -18,6 +18,8 @@ public interface ReimbursementDAO {
 	public boolean removeRequest(String type, int employeeId);
 	
 	public List<Request> getAllRequestsByType(String type);
+	
+	public List<Request> getAllRequestsByStatus(String approval);
 
 	public Request getRequestByType(String type, int employeeId);
 }

@@ -6,15 +6,18 @@
 </head>
 <body>
 	<h1 style = "text-align: centered">Are you an Employee or Finance Manager?</h1>
-	<select>
+	<select onChange="location = this.value;" id = "displayMenu;">
 	<option value = preLogin></option>
 	<option value = loginPage_emp.html id = "emp">Employee</option>
 	<option value = loginPage_mgr.html id = "mgr">Manager</option>
 	</select>
 	
-	<a href = "redirectToLogin.html">
-	<button>Submit</button>
-	</a>
+	<div>
+		<form onclick="location.href = 'http://localhost:9000/newUserPage.html';">
+			<button type="button" class="btn btn-primary" id="return">Register as a new user</button>
+		</form>
+	</div>
+
 	
 </body>
 </html>

@@ -6,18 +6,17 @@
 </head>
 <body>
 	<h1>Welcome to Company AA Reimbursement Page</h1>
-	<form  action = "/login" method = "GET">
-		<select>
-			<option value= "userType">
-		</select>
-		<input type = "text" placeholder = "Enter username" name = "username">
-		<input type = "password" placeholder = "Enter password" name = "password">
-		<input type = "submit">
-	</form>
-	<!-- Next steps: connect this html page to a JS application where homepage menu is displayed -->
-	<!--  after the username and password is verified -->
-	<a href = "newUserPage.html" >New user? Click here!</a>
-	<!-- for newUserPage.html have the user state whether they are an employee or a finance mgr -->
-	<!-- need two separate user menus, employee "to do" and finance manager "to do" -->
+	<div>
+	
+		<form  action = "http://localhost:9000/login?" method = "GET">
+			<select>
+				<option value= "userType">
+			</select>
+			<input type = "text" placeholder = "Enter username" name = "username">
+			<input type = "text" placeholder = "Enter password" name = "password">
+			<input type = "submit">
+		</form>
+	</div>
+	
 </body>
 </html>

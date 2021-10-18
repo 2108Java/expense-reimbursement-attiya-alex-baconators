@@ -50,7 +50,7 @@ public class UserDAOImplimentation implements UserDAO {
 
 		try(Connection connection = ConnectionFactory.getConnection()){
 			
-			String query = "SELECT password_emp FROM employee_login WHERE employee_id = ?";
+			String query = "SELECT password FROM employee_login WHERE employee_id = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
 			
 			ps.setInt(1, id);
@@ -58,7 +58,7 @@ public class UserDAOImplimentation implements UserDAO {
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				password = rs.getString("password_emp");
+				password = rs.getString("password");
 			}
 			
 		} catch (SQLException e) {
@@ -75,14 +75,14 @@ public class UserDAOImplimentation implements UserDAO {
 
 		try(Connection connection = ConnectionFactory.getConnection()){
 			
-			String query = "INSERT INTO employee_table(firstname, lastname, address, city, state, zip, username, password) VALUES (?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO employee_login VALUES (?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement ps = connection.prepareStatement(query);
 			
-			ps.setString(1, employee.getFirstname());
-			ps.setString(2, employee.getLastname());
-			ps.setString(3, employee.getAddress());
-			ps.setString(4, employee.getDepartment());//added department
+			ps.setInt(1, employee.getEmployeeId());
+			ps.setString(2, employee.getFirstname());
+			ps.setString(3, employee.getLastname());
+			ps.setString(4, employee.getAddress());
 			ps.setString(5, employee.getCity());
 			ps.setString(6, employee.getState());
 			ps.setInt(7, employee.getZip());

@@ -30,7 +30,7 @@ public class Request {
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-	public String isApproval() {
+	public String getApproval() {
 		return approval;
 	}
 	public void setApproval(String approval) {

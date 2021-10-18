@@ -5,24 +5,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 style = "text-align: centered">New Expense</h1>
-	<form action="http://localhost:9000/submitRequest?" method="GET">
-		<input type = "text" placeholder = "Employee ID" name = "employeeId">
-		<br>
-		<input type = "text" placeholder = "Expense Amount" name = "amount">
-		<br>
-		<input type = "text" placeholder = "Description" name = "description">
-		<br>
+    <form action="http://localhost:9000/removeRequest?" method="GET">
+        <input type="text" placeholder="Employee ID" name = "employeeId">
+        <br>
 		<select name="type" placeholder="Request Type">
 			<option value = "food">Food</option>
 			<option value = "lodging">Lodging</option>
 			<option value = "travel">Travel</option>
 			<option value = "other">Other</option>
 		</select>
-		<br>
+        <br>
 		<input type = "submit" value = "submit">
-	</form>
-	<div>
+    </form>
+    <div>
 		<form onclick="location.href = 'http://localhost:9000/RequestsMenu.html';">
 			<button type="button" class="btn btn-primary" id="return">Return to Requests Menu</button>
 		</form>

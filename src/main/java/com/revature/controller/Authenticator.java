@@ -7,28 +7,24 @@ import io.javalin.http.Context;
 
 public class Authenticator {
 	
-	public String login(Context ctx) {
+	public boolean login(String username, String password) {
+		
+		boolean status = false;
 		
 		UserDAOImplimentation ud = new UserDAOImplimentation();
 		Service s = new Service();
 		String destination = "";
-		int id = s.validate(ctx.formParam("username"));
-		String pass = ctx.formParam("password");
+		int id = s.validate(username);
 		
-		if(id != 0 && pass.equals(ud.checkPassword(id))) {
+		
+		
+		if(id != 0 && password.equals(ud.checkPassword(id))) {
 			
-			ctx.sessionAttribute("loggedIn", true);
-			ctx.sessionAttribute("id", id);
-			destination = "/RequestsMenu.html";
-			
-		}else {
-			
-			ctx.sessionAttribute("loggedIn", false);
-			destination = "/loginFailed.html";
+			status = true;
 			
 		}
 		
-		return destination;
+		return status;
 		
 	}
 

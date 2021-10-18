@@ -16,7 +16,7 @@ public class Service implements UserService{
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			
-			String query = "SELECT employee_id FROM employee_login WHERE username_emp = ?";
+			String query = "SELECT employee_id FROM employee_login WHERE username = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
 			
 			ps.setString(1, username);
@@ -24,7 +24,9 @@ public class Service implements UserService{
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
+				
 				id = rs.getInt("employee_id");
+			
 			}
 			
 			

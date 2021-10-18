@@ -1,5 +1,8 @@
 package com.revature.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +43,43 @@ public class RequestHandler {
 //			reqDispatcher.forward(request, response);
 //		});
 //		
-//		app.get("/login", ctx -> ctx.redirect(authenticator.login(ctx)));
+		app.get("/login", ctx -> {
+			
+			String username = ctx.queryParam("username");
+			String password = ctx.queryParam("password");
+			
+			System.out.println(username);
+			System.out.println(password);
+			
+			boolean loggedIn = authenticator.login(username, password);
+			
+			if(loggedIn) {
+				ctx.redirect("/RequestsMenu.html");
+			} else {
+				ctx.redirect("loginFailed.html");
+			}
+			
+		});
+		
+		app.get("/loginManager", ctx -> {
+			
+			String username = ctx.queryParam("username");
+			String password = ctx.queryParam("password");
+			
+			System.out.println(username);
+			System.out.println(password);
+			
+			boolean loggedIn = authenticator.login(username, password);
+			
+			if(loggedIn) {
+				ctx.redirect("/RequestsMenuManager.html");
+			} else {
+				ctx.redirect("preLogin.html");
+			}
+			
+		});
+		
+		
 //		
 //		app.get("/", ctx -> ctx.req.getRequestDispatcher("/loginPage.html").forward(ctx.req, ctx.res));
 //				
@@ -68,55 +107,16 @@ public class RequestHandler {
 		
 		app.get("/submitRequest", ctx -> {
 			
-			if(checkLogin(ctx)) {
-				Request r = new Request(Integer.parseInt(ctx.queryParam("employeeId")), 
-						ctx.queryParam("approval"), 
-						ctx.queryParam("requestType"), ctx.queryParam("description"), 
-						Integer.parseInt(ctx.queryParam("amount")));//"approval" should be removed because the status will be "pending" by default
-				
-				rd.submitRequest(r);
-				ctx.status(201);
-				
-			} else {
-				ctx.status(403);
-				ctx.redirect("/loginPage.html");
-			}
-		});
+			Request r = new Request();
+			
+			r.setEmployeeId(Integer.parseInt(ctx.queryParam("employeeId")));
+			r.setRequestType(ctx.queryParam("type"));
+			r.setDescription(ctx.queryParam("description"));
+			r.setAmount(Integer.parseInt(ctx.queryParam("amount")));
 		
-		app.get("/editRequestType", ctx -> {//remove, we will just have a delete option in the third selection of the drop down list in the homepage
+			rd.submitRequest(r);	
 			
-			if(checkLogin(ctx)) {
-				
-				String typeOrigin = ctx.queryParam("typeOrigin");
-				String typeTarget = ctx.queryParam("typeTarget");
-				int id = Integer.parseInt(ctx.queryParam("id"));
-				
-				ctx.json(rd.editRequestType(typeOrigin, typeTarget, id));
-				ctx.status(204);
-				
-			}else {
-				ctx.status(403);
-				ctx.redirect("/loginPage.html");
-			}
-			
-		});
-		
-		app.get("/editRequestDescription", ctx -> {//same as line 86
-			
-			if(checkLogin(ctx)) {
-				
-				String newDescription = ctx.queryParam("newDescription");
-				String typeTarget = ctx.queryParam("typeTarget");
-				int id = Integer.parseInt(ctx.queryParam("id"));
-				
-				ctx.json(rd.editRequestType(newDescription, typeTarget, id));
-				ctx.status(204);
-				
-			}else {
-				ctx.status(403);
-				ctx.redirect("/loginPage.html");
-				
-			}
+			ctx.redirect("/RequestsMenu.html");
 			
 		});
 		
@@ -129,7 +129,6 @@ public class RequestHandler {
 					ctx.queryParam("department"), Float.parseFloat(ctx.queryParam("outstandingExpenses")));
 			
 			ud.addNewUser(employee);
-			ctx.status(201);
 			
 		});
 		
@@ -143,11 +142,141 @@ public class RequestHandler {
 					ctx.queryParam("username"), ctx.queryParam("password"));
 			
 			ud.registerUser(employee);
-			ctx.status(201);
+			
+			ctx.redirect("preLogin.html");
 			
 		});
 		
-		app.get("/getRequest", ctx -> ctx.json(rd.getRequestByType(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")))));
+		app.get("/getRequest", ctx -> {
+			
+			Request r = new Request();
+			
+			r = rd.getRequestByType(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+			
+			
+			//ctx.json(r);
+			
+			ctx.html("<head><style>table,th,tr,td { border: 1px solid black;}</style></head>"
+					+ "<body>"
+					+ "<table><tr>"
+					+ "<th>Employee Id</th>"
+					+ "<th>Request Approval</th>"
+					+ "<th>Request Type</th>"
+					+ "<th>Request Description</th>"
+					+ "<th>Amount</th>"
+					+ "</tr>"
+					+ "<tr>"
+					+ "<td>" + r.getEmployeeId() + "</td>"
+					+ "<td>" + r.getApproval() + "</td>"
+					+ "<td>" + r.getRequestType() + "</td>"
+					+ "<td>" + r.getDescription() + "</td>"
+					+ "<td>" + r.getAmount() + "</td>"
+					+ "</tr></table>"
+					+ "<div>"
+					+ "<form>"
+					+ "<button type='button' class='btn btn-primary' id='return'>Return to Requests Menu</button>"
+					+ "</form>"
+					+ "</div>"
+					+ "<script src='get.js'></script>"
+					+ "</body>");
+				
+		});
+		
+		app.get("/getAllRequests", ctx -> {
+			
+			List<Request> rl = new ArrayList<>();
+			String table = "";
+			
+			rl = rd.getAllRequestsByType(ctx.queryParam("type"));						
+			
+			for(Request r : rl) {
+				
+				table += "</tr>"
+				+ "<tr>"
+				+ "<td>" + r.getEmployeeId() + "</td>"
+				+ "<td>" + r.getApproval() + "</td>"
+				+ "<td>" + r.getRequestType() + "</td>"
+				+ "<td>" + r.getDescription() + "</td>"
+				+ "<td>" + r.getAmount() + "</td>"
+				+ "</tr>";
+						
+			}
+			
+			ctx.html("<head><style>table,th,tr,td { border: 1px solid black;}</style></head>"
+					+ "<body>"
+					+ "<table><tr>"
+					+ "<th>Employee Id</th>"
+					+ "<th>Request Approval</th>"
+					+ "<th>Request Type</th>"
+					+ "<th>Request Description</th>"
+					+ "<th>Amount</th>"
+					+ table
+					+ "</table>"
+					+ "<div>"
+					+ "<form>"
+					+ "<button type='button' class='btn btn-primary' id='returnAll'>Return to Requests Menu</button>"
+					+ "</form>"
+					+ "</div>"
+					+ "<script src='getAll.js'></script>"
+					+ "</body>");
+			
+			
+			
+			
+			
+		});
+		
+		app.get("/getAllRequestsStatus", ctx -> {
+			
+			List<Request> rl = new ArrayList<>();
+			String table = "";
+			
+			rl = rd.getAllRequestsByStatus(ctx.queryParam("status"));						
+			
+			for(Request r : rl) {
+				
+				table += "</tr>"
+				+ "<tr>"
+				+ "<td>" + r.getEmployeeId() + "</td>"
+				+ "<td>" + r.getApproval() + "</td>"
+				+ "<td>" + r.getRequestType() + "</td>"
+				+ "<td>" + r.getDescription() + "</td>"
+				+ "<td>" + r.getAmount() + "</td>"
+				+ "</tr>";
+						
+			}
+			
+			ctx.html("<head><style>table,th,tr,td { border: 1px solid black;}</style></head>"
+					+ "<body>"
+					+ "<table><tr>"
+					+ "<th>Employee Id</th>"
+					+ "<th>Request Approval</th>"
+					+ "<th>Request Type</th>"
+					+ "<th>Request Description</th>"
+					+ "<th>Amount</th>"
+					+ table
+					+ "</table>"
+					+ "<div>"
+					+ "<form>"
+					+ "<button type='button' class='btn btn-primary' id='returnAllStatus'>Return to Requests Menu</button>"
+					+ "</form>"
+					+ "</div>"
+					+ "<script src='getAllStatus.js'></script>"
+					+ "</body>");
+			
+			
+			
+			
+			
+		});
+		
+		app.get("/removeRequest", ctx -> {
+			
+			rd.removeRequest(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+			
+			ctx.redirect("/RequestsMenu.html");
+			
+		});
 
 	}
 

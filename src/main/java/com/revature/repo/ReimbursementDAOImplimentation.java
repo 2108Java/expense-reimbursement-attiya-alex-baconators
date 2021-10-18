@@ -207,6 +207,36 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		return request;
 	}
 
+	@Override
+	public List<Request> getAllRequestsByStatus(String approval) {
+		
+		List<Request> requestList = new ArrayList<>();
+
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "SELECT * FROM requests_table WHERE request_approval = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, approval);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				Request r = new Request(rs.getInt("employee_id"), approval, rs.getString("request_type"), rs.getString("description"), rs.getInt("amount"));
+				
+				requestList.add(r);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return requestList;
+	}
+
 	
 
 }
