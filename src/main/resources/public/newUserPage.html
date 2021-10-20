@@ -3,30 +3,54 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>New User Page</title>
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<h1>Welcome new user!</h1>
-	<h3>Please fill out the form below</h3>
+	<div>
+        <h1 class="titleBar">Corporate Reimbursement Services</h1>
+    </div>
+	<div>
+		<h1 style="text-align: center" class="title">Welcome new user!</h1>
+	</div>
 	
-	<form action = "/registerUser?" method = "GET">
-		<input type = "text" placeholder = "first name" name = "firstname">
-		<input type = "text" placeholder = "last name" name = "lastname">
-		<input type = "number" placeholder = "Employee ID" name = "employeeId">
-		<select name="department">
-		<option value = ""></option>
-		<option value = "IT">IT</option><!-- IT,HR,General or finance manager -->
-		<option value = "HR">HR</option>
-		<option value = "General">General</option>
-		</select>
-		<input type = "text" placeholder = "address " name = "address">
-		<input type = "text" placeholder = "city" name = "city">
-		<input type = "text" placeholder = "state (2 letter abbreviation)" name = "state">
-		<input type = "number" placeholder = "zip code" name = "zip">
-		<input type = "text" placeholder = "Enter username" name = "username"><!-- the username and password will be saved in a SQL table through the "insert" declaration in Java after authentication -->
-		<input type = "password" placeholder = "Enter password" name = "password">	
-		
-		<input type = "submit">
-	</form>
+	
+	<div class="container">
+		<div>
+			<h1 class="title">Registration data</h1>
+		</div>
+		<div>
+			<form action = "/registerUser?" method = "GET">
+				<div class="row"> 
+					<div class="col">
+						<input class="form-control form-control-block" type = "text" placeholder = "first name" name = "firstname">
+						<input class="form-control form-control-block" type = "text" placeholder = "last name" name = "lastname">	
+						<input class="form-control form-control-block" type = "number" placeholder = "Employee ID" name = "employeeId">
+						<select class="form-control form-control-block" name="department">
+						<option value = ""></option>
+						<option value = "IT">IT</option>
+						<option value = "HR">HR</option>
+						<option value = "General">General</option>
+						</select>
+						<input class="form-control form-control-block" type = "text" placeholder = "address " name = "address">
+					</div>
+					
+				<div class="row">
+					<div class="col">
+						<input class="form-control form-control-block" type = "text" placeholder = "city" name = "city">
+						<input class="form-control form-control-block" type = "text" placeholder = "state (abbreviation)" name = "state">
+						<input class="form-control form-control-block" type = "number" placeholder = "zip code" name = "zip">
+						<input class="form-control form-control-block" type = "text" placeholder = "Enter username" name = "username">
+						<input class="form-control form-control-block" type = "password" placeholder = "Enter password" name = "password">
+					</div>
+				</div>
+				<div>
+					<input class="form-control form-control-block" type = "submit" value="Submit">
+				</div>
+			</form>
+		</div>
+	</div>
+	
 
 	
 </body>

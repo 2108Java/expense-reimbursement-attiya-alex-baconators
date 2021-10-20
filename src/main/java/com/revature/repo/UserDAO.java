@@ -7,5 +7,6 @@ public interface UserDAO {
 	public boolean addNewUser(Employee employee);
 	public boolean registerUser(Employee employee);
 	public String checkPassword(int id);
+	public String checkPasswordManager(int id);
 	
 }

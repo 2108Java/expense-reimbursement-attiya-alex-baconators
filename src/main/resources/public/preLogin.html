@@ -2,22 +2,26 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Employee or Finance Manager</title>
+<title>Welcome!</title>
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<h1 style = "text-align: centered">Are you an Employee or Finance Manager?</h1>
-	<select onChange="location = this.value;" id = "displayMenu;">
-	<option value = preLogin></option>
-	<option value = loginPage_emp.html id = "emp">Employee</option>
-	<option value = loginPage_mgr.html id = "mgr">Manager</option>
-	</select>
-	
 	<div>
-		<form onclick="location.href = 'http://localhost:9000/newUserPage.html';">
-			<button type="button" class="btn btn-primary" id="return">Register as a new user</button>
-		</form>
+		<h1 class="titleBar"> Corporate Reimbursement Services</h1>
 	</div>
-
-	
+	<div class="container">
+		<div>
+			<h1 class="title">Welcome!</h1>
+		</div>
+		<br>
+		<div>
+			<div>
+				<button type="button" class="btn btn-info btn-lg btn-block" id="employeeLogin" onclick="location.href =  '/loginPage_emp.html';">Employee Login</button>
+				<button type="button" class="btn btn-success btn-lg btn-block" id="managerLogin" onclick="location.href =  '/loginPage_mgr.html';">Manager Login</button>
+				<button type="button" class="btn btn-primary btn-lg btn-block" id="return" onclick="location.href = '/newUserPage.html';">Register new user</button>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

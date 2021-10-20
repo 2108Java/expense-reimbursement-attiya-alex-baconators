@@ -99,4 +99,29 @@ public class UserDAOImplimentation implements UserDAO {
 		return status;
 	}
 
+	@Override
+	public String checkPasswordManager(int id) {
+		
+		String password = "";
+
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "SELECT password_mgr FROM manager_login WHERE manager_id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				password = rs.getString("password_mgr");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return password;
+	}
+
 }

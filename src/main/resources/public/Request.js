@@ -1,3 +1,4 @@
+
 let addRequestListener = document.getElementById("add");
 
 addRequestListener.addEventListener('click', addRedirect);
@@ -11,7 +12,9 @@ let removeRequestListener = document.getElementById("remove");
 removeRequestListener.addEventListener('click', removeRedirect);
 
 function removeRedirect(){
-    window.location.replace("http://localhost:9000/removeRequest.html");
+
+    window.location.replace("http://localhost:9000/removeRequest.html");  
+      
 }
 
 let getRequestListener = document.getElementById("getRequest");
@@ -27,5 +30,6 @@ let logoutRequestListener = document.getElementById("logout");
 logoutRequestListener.addEventListener('click', logoutRedirect);
 
 function logoutRedirect(){
-    window.location.replace("http://localhost:9000/preLogin.html");
+
+    window.location.replace("http://localhost:9000/logout");
 }

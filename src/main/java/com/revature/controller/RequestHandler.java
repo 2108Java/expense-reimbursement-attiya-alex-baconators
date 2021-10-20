@@ -34,89 +34,51 @@ public class RequestHandler {
 		ReimbursementDAOImplimentation rd = new ReimbursementDAOImplimentation();
 		Controller controller = new Controller();
 		
-//		app.get("/", ctx -> {
-//			HttpServletRequest request = ctx.req;
-//			HttpServletResponse response = ctx.res;
-//			
-//			RequestDispatcher reqDispatcher = ctx.req.getRequestDispatcher("/loginPage.html");
-//			
-//			reqDispatcher.forward(request, response);
-//		});
-//		
+		
 		app.get("/login", ctx -> {
 			
-			String username = ctx.queryParam("username");
-			String password = ctx.queryParam("password");
-			
-			System.out.println(username);
-			System.out.println(password);
-			
-			boolean loggedIn = authenticator.login(username, password);
-			
-			if(loggedIn) {
-				ctx.redirect("/RequestsMenu.html");
-			} else {
-				ctx.redirect("loginFailed.html");
-			}
+			ctx.redirect(authenticator.login(ctx));
 			
 		});
 		
 		app.get("/loginManager", ctx -> {
 			
-			String username = ctx.queryParam("username");
-			String password = ctx.queryParam("password");
-			
-			System.out.println(username);
-			System.out.println(password);
-			
-			boolean loggedIn = authenticator.login(username, password);
-			
-			if(loggedIn) {
-				ctx.redirect("/RequestsMenuManager.html");
-			} else {
-				ctx.redirect("preLogin.html");
-			}
+			ctx.redirect(authenticator.loginManager(ctx));
 			
 		});
 		
-		
-//		
-//		app.get("/", ctx -> ctx.req.getRequestDispatcher("/loginPage.html").forward(ctx.req, ctx.res));
-//				
-//		app.get("/logout", ctx -> ctx.redirect("/loginPage.html"));
-//		
-////		app.get("/getRequests", ctx -> ctx.json(rd.))
-//		
-//		app.get("/checkStatus", ctx -> {
-//			
-//			if(checkLogin(ctx)) {
-//				ctx.json(controller.checkRequestStatus(ctx));
-//				ctx.status(204);
-//			}else {
-//				ctx.status(403);
-//				ctx.redirect("/loginPage.html");
-//			}
-//		});
-//		
-//		app.post("/invalidateSession", ctx -> {
-//			
-//			ctx.consumeSessionAttribute("user");
-//			ctx.redirect("/loginPage");
-//			
-//		});
-		
 		app.get("/submitRequest", ctx -> {
 			
-			Request r = new Request();
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
 			
-			r.setEmployeeId(Integer.parseInt(ctx.queryParam("employeeId")));
-			r.setRequestType(ctx.queryParam("type"));
-			r.setDescription(ctx.queryParam("description"));
-			r.setAmount(Integer.parseInt(ctx.queryParam("amount")));
-		
-			rd.submitRequest(r);	
+					Request r = new Request();
+					
+					r.setEmployeeId(Integer.parseInt(ctx.queryParam("employeeId")));
+					r.setRequestType(ctx.queryParam("type"));
+					r.setDescription(ctx.queryParam("description"));
+					r.setAmount(Integer.parseInt(ctx.queryParam("amount")));
+					
+					if((int) ctx.sessionAttribute("id") == Integer.parseInt(ctx.queryParam("employeeId"))) {
+						
+						rd.submitRequest(r);
+						
+						ctx.redirect("/RequestsMenu.html");
+					} else {
+						
+						ctx.redirect("/RequestsMenu.html");
+						
+					}
+						
+					
 			
-			ctx.redirect("/RequestsMenu.html");
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
+			}
+			
 			
 		});
 		
@@ -149,132 +111,263 @@ public class RequestHandler {
 		
 		app.get("/getRequest", ctx -> {
 			
-			Request r = new Request();
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
 			
-			r = rd.getRequestByType(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+				Request r = new Request();
+				
+				r = rd.getRequestByType(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+				
+				ctx.html("<head><link rel=\"stylesheet\" href=\"reimbursement.css\">\r\n"
+						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\r\n"
+						+ "</head>"
+						+ "<body>"
+						+ "<div>"
+				        + "<h1 class=\"titleBar\">Corporate Reimbursement Services</h1>"
+				        + "</div>"
+				        + "<div class=\"container\">"
+				        + "<div>"
+						+ "<table class='table'><thead><tr>"
+				        + "<th scope=\"col\">#</th>"
+						+ "<th scope=\"col\">Employee Id</th>"
+						+ "<th scope=\"col\">Request Approval</th>"
+						+ "<th scope=\"col\">Request Type</th>"
+						+ "<th scope=\"col\">Request Description</th>"
+						+ "<th scope=\"col\">Amount</th></tr></thead>"
+						+ "<tbody>"
+						+ "<tr><th scope=\"row\">1</th>\""
+						+ "<td>" + r.getEmployeeId() + "</td>"
+						+ "<td>" + r.getApproval() + "</td>"
+						+ "<td>" + r.getRequestType() + "</td>"
+						+ "<td>" + r.getDescription() + "</td>"
+						+ "<td>" + r.getAmount() + "</td>"
+						+ "</tr></table>"
+						+ "</tbody>"
+						+ "</table>"
+						+ "<br>"
+						+ "<div>"
+						+ "<form>"
+						+ "<button type='button' class='btn btn-dark' id='returnAllStatus'>Return to Requests Menu</button>"
+						+ "</form>"
+						+ "</div>"
+						+ "</div></div>"
+						+ "<script src=\"Request.js\"></script>"
+						+ "</body>");
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
+			}
 			
-			
-			//ctx.json(r);
-			
-			ctx.html("<head><style>table,th,tr,td { border: 1px solid black;}</style></head>"
-					+ "<body>"
-					+ "<table><tr>"
-					+ "<th>Employee Id</th>"
-					+ "<th>Request Approval</th>"
-					+ "<th>Request Type</th>"
-					+ "<th>Request Description</th>"
-					+ "<th>Amount</th>"
-					+ "</tr>"
-					+ "<tr>"
-					+ "<td>" + r.getEmployeeId() + "</td>"
-					+ "<td>" + r.getApproval() + "</td>"
-					+ "<td>" + r.getRequestType() + "</td>"
-					+ "<td>" + r.getDescription() + "</td>"
-					+ "<td>" + r.getAmount() + "</td>"
-					+ "</tr></table>"
-					+ "<div>"
-					+ "<form>"
-					+ "<button type='button' class='btn btn-primary' id='return'>Return to Requests Menu</button>"
-					+ "</form>"
-					+ "</div>"
-					+ "<script src='get.js'></script>"
-					+ "</body>");
 				
 		});
 		
-		app.get("/getAllRequests", ctx -> {
+		app.get("/getAllRequestsType", ctx -> {
 			
-			List<Request> rl = new ArrayList<>();
-			String table = "";
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
 			
-			rl = rd.getAllRequestsByType(ctx.queryParam("type"));						
-			
-			for(Request r : rl) {
-				
-				table += "</tr>"
-				+ "<tr>"
-				+ "<td>" + r.getEmployeeId() + "</td>"
-				+ "<td>" + r.getApproval() + "</td>"
-				+ "<td>" + r.getRequestType() + "</td>"
-				+ "<td>" + r.getDescription() + "</td>"
-				+ "<td>" + r.getAmount() + "</td>"
-				+ "</tr>";
+					List<Request> rl = new ArrayList<>();
+					
+					String table = "";
+					
+					rl = rd.getAllRequestsByType(ctx.queryParam("type"));						
+					
+					Request r = new Request();
+					
+					
+					for(int i=0; i<rl.size(); i++) {
 						
+						r = rl.get(i);
+						
+						table += "<tr><th scope=\"row\">" + (i+1) + "</th>"
+						+ "<td>" + r.getEmployeeId() + "</td>"
+						+ "<td>" + r.getApproval() + "</td>"
+						+ "<td>" + r.getRequestType() + "</td>"
+						+ "<td>" + r.getDescription() + "</td>"
+						+ "<td>" + r.getAmount() + "</td>"
+						+ "</tr>";
+					
+								
+					}
+					
+					ctx.html("<head><link rel=\"stylesheet\" href=\"reimbursement.css\">\r\n"
+							+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\r\n"
+							+ "</head>"
+							+ "<body>"
+							+ "<div>"
+					        + "<h1 class=\"titleBar\">Corporate Reimbursement Services</h1>"
+					        + "</div>"
+					        + "<div class=\"container\">"
+					        + "<div>"
+							+ "<table class='table'><thead><tr>"
+					        + "<th scope=\"col\">#</th>"
+							+ "<th scope=\"col\">Employee Id</th>"
+							+ "<th scope=\"col\">Request Approval</th>"
+							+ "<th scope=\"col\">Request Type</th>"
+							+ "<th scope=\"col\">Request Description</th>"
+							+ "<th scope=\"col\">Amount</th></tr></thead>"
+							+ "<tbody>"
+							+ table
+							+ "</tbody>"
+							+ "</table>"
+							+ "<br>"
+							+ "<div>"
+							+ "<form>"
+							+ "<button type='button' class='btn btn-dark' id='returnAllStatus'>Return to Requests Menu</button>"
+							+ "</form>"
+							+ "</div>"
+							+ "</div></div>"
+							+ "<script src=\"getAllStatus.js\"></script>"
+							+ "</body>");
+					
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
 			}
-			
-			ctx.html("<head><style>table,th,tr,td { border: 1px solid black;}</style></head>"
-					+ "<body>"
-					+ "<table><tr>"
-					+ "<th>Employee Id</th>"
-					+ "<th>Request Approval</th>"
-					+ "<th>Request Type</th>"
-					+ "<th>Request Description</th>"
-					+ "<th>Amount</th>"
-					+ table
-					+ "</table>"
-					+ "<div>"
-					+ "<form>"
-					+ "<button type='button' class='btn btn-primary' id='returnAll'>Return to Requests Menu</button>"
-					+ "</form>"
-					+ "</div>"
-					+ "<script src='getAll.js'></script>"
-					+ "</body>");
-			
-			
-			
 			
 			
 		});
 		
 		app.get("/getAllRequestsStatus", ctx -> {
 			
-			List<Request> rl = new ArrayList<>();
-			String table = "";
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
 			
-			rl = rd.getAllRequestsByStatus(ctx.queryParam("status"));						
-			
-			for(Request r : rl) {
-				
-				table += "</tr>"
-				+ "<tr>"
-				+ "<td>" + r.getEmployeeId() + "</td>"
-				+ "<td>" + r.getApproval() + "</td>"
-				+ "<td>" + r.getRequestType() + "</td>"
-				+ "<td>" + r.getDescription() + "</td>"
-				+ "<td>" + r.getAmount() + "</td>"
-				+ "</tr>";
+					List<Request> rl = new ArrayList<>();
+					
+					String table = "";
+					
+					rl = rd.getAllRequestsByStatus(ctx.queryParam("status"));
+					
+					Request r = new Request();
+					
+					
+					for(int i=0; i<rl.size(); i++) {
 						
+						r = rl.get(i);
+						
+						table += "<tr><th scope=\"row\">" + (i+1) + "</th>"
+						+ "<td>" + r.getEmployeeId() + "</td>"
+						+ "<td>" + r.getApproval() + "</td>"
+						+ "<td>" + r.getRequestType() + "</td>"
+						+ "<td>" + r.getDescription() + "</td>"
+						+ "<td>" + r.getAmount() + "</td>"
+						+ "</tr>";
+					
+								
+					}
+					
+					ctx.html("<head><link rel=\"stylesheet\" href=\"reimbursement.css\">\r\n"
+							+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\r\n"
+							+ "</head>"
+							+ "<body>"
+							+ "<div>"
+					        + "<h1 class=\"titleBar\">Corporate Reimbursement Services</h1>"
+					        + "</div>"
+					        + "<div class=\"container\">"
+					        + "<div>"
+							+ "<table class='table'><thead><tr>"
+					        + "<th scope=\"col\">#</th>"
+							+ "<th scope=\"col\">Employee Id</th>"
+							+ "<th scope=\"col\">Request Approval</th>"
+							+ "<th scope=\"col\">Request Type</th>"
+							+ "<th scope=\"col\">Request Description</th>"
+							+ "<th scope=\"col\">Amount</th></tr></thead>"
+							+ "<tbody>"
+							+ table
+							+ "</tbody>"
+							+ "</table>"
+							+ "<br>"
+							+ "<div>"
+							+ "<form>"
+							+ "<button type='button' class='btn btn-dark' id='returnAllStatus'>Return to Requests Menu</button>"
+							+ "</form>"
+							+ "</div>"
+							+ "</div></div>"
+							+ "<script src=\"getAllStatus.js\"></script>"
+							+ "</body>");
+			
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
 			}
-			
-			ctx.html("<head><style>table,th,tr,td { border: 1px solid black;}</style></head>"
-					+ "<body>"
-					+ "<table><tr>"
-					+ "<th>Employee Id</th>"
-					+ "<th>Request Approval</th>"
-					+ "<th>Request Type</th>"
-					+ "<th>Request Description</th>"
-					+ "<th>Amount</th>"
-					+ table
-					+ "</table>"
-					+ "<div>"
-					+ "<form>"
-					+ "<button type='button' class='btn btn-primary' id='returnAllStatus'>Return to Requests Menu</button>"
-					+ "</form>"
-					+ "</div>"
-					+ "<script src='getAllStatus.js'></script>"
-					+ "</body>");
-			
-			
-			
-			
 			
 		});
 		
 		app.get("/removeRequest", ctx -> {
+						
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
+					if((int) ctx.sessionAttribute("id") == Integer.parseInt(ctx.queryParam("employeeId"))) {
+						
+						rd.removeRequest(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
 			
-			rd.removeRequest(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+						ctx.redirect("/RequestsMenu.html");
+
+
+					} else {
+						
+						ctx.redirect("/RequestsMenu.html");
+						
+					}
+					
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
+			}
 			
-			ctx.redirect("/RequestsMenu.html");
+
+		});
+		
+		app.get("/approveRequest", ctx -> {
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
+					
+					rd.approveRequest(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+		
+					ctx.redirect("/RequestsMenuManager.html");
+					
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
+			}
+			
+			
+		});
+		
+		app.get("/rejectRequest", ctx -> {
+			if(ctx.sessionAttribute("id") != null) {
+				if(ctx.sessionAttribute("loggedIn").equals(true)) {
+					
+					rd.rejectRequest(ctx.queryParam("type"), Integer.parseInt(ctx.queryParam("employeeId")));
+		
+					ctx.redirect("/RequestsMenuManager.html");
+					
+				}else {
+					ctx.redirect("preLogin.html");
+				}
+			}else {
+				ctx.redirect("preLogin.html");
+			}
+			
+			
+		});
+		
+		app.get("/logout", ctx -> {
+			
+			ctx.consumeSessionAttribute("loggedIn");
+		
+			ctx.redirect("preLogin.html");
 			
 		});
 

@@ -3,15 +3,29 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>New User Page</title>
+
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <button type="button" class="btn btn-primary" id="add">Submit a new request</button>
-    <br>
-    <button type="button" class="btn btn-primary" id="remove">Remove a request</button>
-    <br>
-    <button type="button" class="btn btn-primary" id="getRequest">View a request</button>
-    <br>
-    <button type="button" class="btn btn-primary" id="logout">Log out</button>
+    <div>
+        <h1 class="titleBar">Corporate Reimbursement Services</h1>
+    </div>
+    
+    <div class="container">
+        <div>
+			<h1 class="title">Request Options</h1>
+		</div>
+        <br>
+        <div>
+            <button type="button" class="btn btn-info btn-lg btn-block" id="add">Submit a new request</button>
+            <button type="button" class="btn btn-success btn-lg btn-block" id="remove">Remove a request</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="getRequest">View a request</button>
+            <button type="button" class="btn btn-dark btn-lg btn-block" id="logout">Log out</button>
+        </div>
+    </div>
+
+    
 
     <script src="Request.js"></script>
 </body>

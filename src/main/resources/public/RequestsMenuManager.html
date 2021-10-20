@@ -2,14 +2,30 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>New User Page</title>
+<title>Manager Menu</title>
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <button type="button" class="btn btn-primary" id="getAll">View all requests by type</button>
-    <br>
-    <button type="button" class="btn btn-primary" id="getAllStatus">View all requests by status</button>
-    <br>
-    <button type="button" class="btn btn-primary" id="logout">Log out</button>
+    <div>
+        <h1 class="titleBar">Corporate Reimbursement Services</h1>
+    </div>
+    <div class="container">
+        <div>
+            <h1 class="title">Request Options</h1>
+        </div>
+        <br>
+        <div>
+            <button type="button" class="btn btn-info btn-lg btn-block" id="getAll">View all requests by type</button>
+            <button type="button" class="btn btn-success btn-lg btn-block" id="getAllStatus">View all requests by status</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="approveRequest">Approve a Request</button>
+            <button type="button" class="btn btn-info btn-lg btn-block" id="rejectRequest">Reject a Request</button>
+            <button type="button" class="btn btn-dark btn-lg btn-block" id="logout">Log out</button>
+        </div>
+    </div>
+
+    </div>
+    
     <script src="RequestForManager.js"></script>
 </body>
 </html>

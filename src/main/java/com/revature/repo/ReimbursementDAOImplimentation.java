@@ -72,54 +72,6 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		
 		return status;
 	}
-
-	@Override
-	public boolean editRequestType(String typeOrigin, String typeTarget, int employeeId) {
-		
-		boolean status = false;
-		
-		try(Connection connection = ConnectionFactory.getConnection()){
-			
-			String query = "UPDATE requests_table SET request_type = ? WHERE employee_id = ? AND request_type = ?";
-			PreparedStatement ps = connection.prepareStatement(query);
-			
-			ps.setString(1, typeTarget);
-			ps.setInt(2, employeeId);
-			ps.setString(3, typeOrigin);
-			
-			status = ps.execute();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return status;
-	}
-	
-	@Override
-	public boolean editRequestDescription(String newDescription, String type, int employeeId) {
-
-		boolean status = false;
-		
-		try(Connection connection = ConnectionFactory.getConnection()){
-			
-			String query = "UPDATE requests_table SET description = ? WHERE employee_id = ? AND request_type = ?";
-			PreparedStatement ps = connection.prepareStatement(query);
-			
-			ps.setString(1, newDescription);
-			ps.setInt(2, employeeId);
-			ps.setString(3, type);
-			
-			status = ps.execute();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return status;
-	}
 	
 	@Override
 	public boolean removeRequest(String type, int employeeId) {
@@ -235,6 +187,53 @@ public class ReimbursementDAOImplimentation implements ReimbursementDAO{
 		
 		
 		return requestList;
+	}
+	
+	@Override
+	public boolean approveRequest(String type, int employeeId) {
+		
+		boolean status = false;
+		
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "UPDATE requests_table SET request_approval = 'approved' WHERE request_type = ? AND employee_id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, type);
+			ps.setInt(2, employeeId);
+			
+			status = ps.execute();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return status;
+	}
+	
+	
+	@Override
+	public boolean rejectRequest(String type, int employeeId) {
+		
+		boolean status = false;
+		
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "UPDATE requests_table SET request_approval = 'rejected' WHERE request_type = ? AND employee_id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, type);
+			ps.setInt(2, employeeId);
+			
+			status = ps.execute();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return status;
 	}
 
 	

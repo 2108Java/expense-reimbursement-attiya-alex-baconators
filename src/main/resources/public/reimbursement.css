@@ -1,0 +1,31 @@
+body{
+    background-image: url("Background.jpg");
+}
+
+
+.container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 40%;
+    width: 10%;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title{
+    font-size: 400%;
+}
+
+.titleBar{
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 2%;
+}
+

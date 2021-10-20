@@ -37,5 +37,34 @@ public class Service implements UserService{
 		}
 		return id;
 	}
+	
+	@Override
+	public int validateManager(String username) {
+		
+		int id = 0;
+		
+		try(Connection connection = ConnectionFactory.getConnection()){
+			
+			String query = "SELECT manager_id FROM manager_login WHERE username_mgr = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, username);
+						
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				id = rs.getInt("manager_id");
+			
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id;
+	}
 
 }

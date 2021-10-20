@@ -2,20 +2,30 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Company AA Reimbursement Login Page</title>
+<title>Employee Login</title>
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<h1>Welcome to Company AA Reimbursement Page</h1>
 	<div>
-	
-		<form  action = "http://localhost:9000/login?" method = "GET">
-			<select>
-				<option value= "userType">
-			</select>
-			<input type = "text" placeholder = "Enter username" name = "username">
-			<input type = "text" placeholder = "Enter password" name = "password">
-			<input type = "submit">
-		</form>
+        <h1 class="titleBar">Corporate Reimbursement Services</h1>
+    </div>
+	<div class="container">
+		<div>
+			<h1 class="title">Employee Login Page</h1>
+		</div>
+		<br>
+		<div>
+			<form  action = "/login?" method = "GET">
+				<input class="form-control form-control-block" type = "text" placeholder = "Enter username" name = "username">
+				<input class="form-control form-control-block" type = "password" placeholder = "Enter password" name = "password">
+				<input class="form-control form-control-block" type = "submit">
+			</form>
+		</div>
+		<br>
+		<div>
+			<button class="btn btn-success btn-lg btn-block" onclick="location.href='/preLogin.html';">Return to login</button>
+		</div>
 	</div>
 	
 </body>

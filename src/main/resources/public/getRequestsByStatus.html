@@ -3,24 +3,38 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<div id="getRequestStatus">
-		<form action="http://localhost:9000/getAllRequestsStatus?" method="GET">
-			<select name="status" placeholder="Request Status">
-				<option value = "approved">Approved</option>
-				<option value = "pending">Pending</option>
-				<option value = "rejected">Rejected</option>
-			</select>
-			<br>
-			<input type="submit" id="submit">
-		</form>
-	</div>
 	<div>
-		<form onclick="location.href = 'http://localhost:9000/RequestsMenuManager.html';">
-			<button type="button" class="btn btn-primary" id="return">Return to Requests Menu</button>
-		</form>
+        <h1 class="titleBar">Corporate Reimbursement Services</h1>
+    </div>
+	<div class="container">
+		<div>
+			<h1 class="title">Filter Requests by Status</h1>
+		</div>
+		<br>
+		<div id="getRequestStatus">
+			<form action="http://localhost:9000/getAllRequestsStatus?" method="GET">
+				<select class="form-control form-control-block" name="status">
+					<option>Request Status</option>
+					<option value = "approved">Approved</option>
+					<option value = "pending">Pending</option>
+					<option value = "rejected">Rejected</option>
+				</select>
+				<input class="form-control form-control-block" type="submit" id="Submit">
+			</form>
+		</div>
+		<br>
+		<div>
+			<form onclick="location.href = 'http://localhost:9000/RequestsMenuManager.html';">
+				<button type="button" class="btn btn-primary" id="return">Return to Requests Menu</button>
+			</form>
+		</div>
 	</div>
+	
+	
 
 </body>
 </html>

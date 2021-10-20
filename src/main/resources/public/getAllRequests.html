@@ -3,24 +3,36 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" href="reimbursement.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<div id="getRequest">
-		<form action="http://localhost:9000/getAllRequests?" method="GET">
-			<select name="type" placeholder="Request Type">
-				<option value = "food">Food</option>
-				<option value = "lodging">Lodging</option>
-				<option value = "travel">Travel</option>
-				<option value = "other">Other</option>
-			</select>
-			<br>
-			<input type="submit" id="submit">
-		</form>
-	</div>
 	<div>
-		<form onclick="location.href = 'http://localhost:9000/RequestsMenuManager.html';">
-			<button type="button" class="btn btn-primary" id="return">Return to Requests Menu</button>
-		</form>
+        <h1 class="titleBar">Corporate Reimbursement Services</h1>
+    </div>
+	<div class="container">
+		<div>
+			<h1 class="title">Filter Requests by Type</h1>
+		</div>
+		<br>
+		<div id="getRequest">
+			<form action="http://localhost:9000/getAllRequestsType?" method="GET">
+				<select class="form-control form-control-block" name="type">
+					<option>Request Type</option>
+					<option value = "food">Food</option>
+					<option value = "lodging">Lodging</option>
+					<option value = "travel">Travel</option>
+					<option value = "other">Other</option>
+				</select>
+				<input class="form-control form-control-block" type="submit" id="submit">
+			</form>
+		</div>
+		<br>
+		<div>
+			<form onclick="location.href = 'http://localhost:9000/RequestsMenuManager.html';">
+				<button type="button" class="btn btn-primary" id="return">Return to Requests Menu</button>
+			</form>
+		</div>
 	</div>
 
 </body>

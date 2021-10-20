@@ -10,10 +10,6 @@ public interface ReimbursementDAO {
 	public boolean submitRequest(Request request);
 	
 	public boolean checkRequestStatus(String type, int employeeId);
-
-	public boolean editRequestType(String typeOrigin, String typeTarget, int employeeId);
-	
-	public boolean editRequestDescription(String newDescription, String type, int employeeId);
 	
 	public boolean removeRequest(String type, int employeeId);
 	
@@ -22,4 +18,8 @@ public interface ReimbursementDAO {
 	public List<Request> getAllRequestsByStatus(String approval);
 
 	public Request getRequestByType(String type, int employeeId);
+
+	boolean approveRequest(String type, int employeeId);
+
+	boolean rejectRequest(String type, int employeeId);
 }
